@@ -3,8 +3,9 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from
 import { getFirestore, collection, getDocs, doc, updateDoc, setDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // app.js-এর একই Firebase config এখানে বসান।
+
 const firebaseConfig = {
-  apiKey: "AIzaSyC_-mRgfZS9oAu01w3HzyXJJhylurf13e4",
+  apiKey: "AIzaSyC_-mRgfZS9oAu01w3HzyXJJhylurfi3e4",
   authDomain: "smart-digital-bd.firebaseapp.com",
   projectId: "smart-digital-bd",
   storageBucket: "smart-digital-bd.firebasestorage.app",
