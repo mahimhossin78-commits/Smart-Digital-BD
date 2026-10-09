@@ -5,7 +5,7 @@ import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp } from "
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC_-mRgfZS9oAu01w3HzyXJJhylurfi3e4",
+  apiKey: "AIzaSyC_-mRgfZS9oAuG1w3HzyXJJhylurfi3e4",
   authDomain: "smart-digital-bd.firebaseapp.com",
   projectId: "smart-digital-bd",
   storageBucket: "smart-digital-bd.firebasestorage.app",
@@ -13,7 +13,6 @@ const firebaseConfig = {
   appId: "1:1062207066369:web:bf1f5eb2129a471a694b00",
   measurementId: "G-BPCRCCJTZR"
 };
-
 const form = document.getElementById("orderForm");
 const message = document.getElementById("formMessage");
 let db = null;
