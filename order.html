@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="Smart Digital BD — নিরাপদ ও সহজ অর্ডার ফর্ম">
+  <title>অর্ডার করুন | Smart Digital BD</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .order-page{min-height:100vh;background:radial-gradient(ellipse at 85% 10%,#eeebff 0,transparent 35%),#f8f9fd;padding:48px 18px 70px}
+    .order-wrap{max-width:1080px;margin:auto}
+    .order-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
+    .back-link{font-size:14px;color:#6550df;font-weight:600}
+    .order-banner{border-radius:24px;padding:34px;background:linear-gradient(125deg,#171b35,#4e43a9);color:white;margin-bottom:24px;position:relative;overflow:hidden}
+    .order-banner:after{content:"";position:absolute;width:250px;height:250px;border:1px solid #ffffff2b;border-radius:50%;right:-60px;top:-95px;box-shadow:0 0 0 30px #ffffff0c,0 0 0 60px #ffffff0a}
+    .order-banner .eyebrow{color:#bdb4ff}.order-banner h1{font-size:clamp(30px,5vw,46px);line-height:1.2;margin:0 0 10px}.order-banner p{color:#e0def9;max-width:650px;margin:0}
+    .order-layout{display:grid;grid-template-columns:.75fr 1.25fr;gap:22px;align-items:start}
+    .order-summary,.order-panel{background:white;border:1px solid #e8ebf2;border-radius:20px;padding:25px;box-shadow:0 15px 40px #18234408}
+    .order-summary h2,.order-panel h2{font-size:22px;margin:0 0 8px}.muted{color:#657086;font-size:14px}
+    .summary-product{margin-top:20px;padding:17px;border-radius:14px;background:#f5f4ff;border:1px solid #e9e5ff}
+    .summary-product strong{display:block;font-size:17px}.summary-price{font-size:24px;color:#654de7;font-weight:700;margin-top:8px}
+    .summary-line{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #edf0f5;padding:11px 0;font-size:13px;color:#657086}
+    .summary-line:last-child{border-bottom:0}
+    .order-form-new label{display:block;font-weight:600;font-size:14px;margin:0 0 15px}
+    .order-form-new input,.order-form-new select,.order-form-new textarea{display:block;width:100%;margin-top:7px;border:1px solid #dfe3ed;border-radius:11px;padding:12px 13px;font:400 15px 'Hind Siliguri',sans-serif;color:#101827;background:#fff;outline:none}
+    .order-form-new input:focus,.order-form-new select:focus,.order-form-new textarea:focus{border-color:#8876f7;box-shadow:0 0 0 3px #7157f515}
+    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .order-submit{width:100%;margin-top:5px}.form-note{font-size:12px;color:#6b7487;margin:12px 0 0}.result-message{margin-top:15px;padding:12px 14px;border-radius:10px;font-size:14px;overflow-wrap:anywhere}
+    .result-message:empty{display:none}.result-message.success{background:#eafaf3;color:#146b4c}.result-message.error{background:#fff0f0;color:#a12626}
+    @media(max-width:760px){.order-layout{grid-template-columns:1fr}.order-banner{padding:26px}.order-top{align-items:flex-start}.order-summary{order:2}}
+    @media(max-width:480px){.field-row{grid-template-columns:1fr;gap:0}.order-panel,.order-summary{padding:19px}.order-page{padding:25px 13px 45px}}
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="index.html#home" aria-label="Smart Digital BD হোম">
+    <span class="brand-mark">SD</span>
+    <span><strong>Smart Digital BD</strong><small>Design • Digital Products</small></span>
+  </a>
+  <a class="back-link" href="index.html#products">← পণ্যে ফিরে যান</a>
+</header>
+<main class="order-page">
+  <div class="order-wrap">
+    <div class="order-banner">
+      <span class="eyebrow">সহজ ও দ্রুত অর্ডার</span>
+      <h1>আপনার অর্ডার সম্পন্ন করুন</h1>
+      <p>সঠিক তথ্য দিয়ে ফর্মটি পূরণ করুন। অর্ডার জমা হলে আপনার অর্ডার আইডি দেখানো হবে।</p>
+    </div>
+    <div class="order-layout">
+      <aside class="order-summary">
+        <h2>অর্ডারের সারাংশ</h2>
+        <p class="muted">আপনার নির্বাচিত পণ্য ও পরবর্তী ধাপ</p>
+        <div class="summary-product">
+          <span class="muted">নির্বাচিত পণ্য</span>
+          <strong id="summaryProduct">পণ্য নির্বাচন করুন</strong>
+          <div class="summary-price" id="summaryPrice">দাম নিশ্চিত করা হবে</div>
+        </div>
+        <div class="summary-line"><span>অর্ডার পদ্ধতি</span><strong>অনলাইন ফর্ম</strong></div>
+        <div class="summary-line"><span>পেমেন্ট</span><strong>এখনো চালু নয়</strong></div>
+        <div class="summary-line"><span>ডেলিভারি</span><strong>আলোচনা সাপেক্ষে</strong></div>
+        <p class="form-note">নোট: এই সাইটে অনলাইন পেমেন্ট চালু নেই। অর্ডার নিশ্চিত করার আগে মূল্য ও ডেলিভারির বিষয়টি সরাসরি নিশ্চিত করুন।</p>
+      </aside>
+      <section class="order-panel">
+        <h2>কাস্টমার তথ্য</h2>
+        <p class="muted">সব প্রয়োজনীয় ঘর পূরণ করুন।</p>
+        <form id="orderPageForm" class="order-form-new">
+          <div class="field-row">
+            <label>আপনার পূর্ণ নাম *
+              <input name="name" required maxlength="80" autocomplete="name" placeholder="নাম লিখুন">
+            </label>
+            <label>মোবাইল নম্বর *
+              <input name="phone" required maxlength="30" inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX">
+            </label>
+          </div>
+          <div class="field-row">
+            <label>ইমেইল
+              <input name="email" type="email" maxlength="120" autocomplete="email" placeholder="name@example.com">
+            </label>
+            <label>পণ্য / সার্ভিস *
+              <select name="product" id="orderProduct" required>
+                <option value="">পণ্য নির্বাচন করুন</option>
+                <option value="ফেসবুক পোস্ট ডিজাইন">ফেসবুক পোস্ট ডিজাইন</option>
+                <option value="CV টেমপ্লেট">CV টেমপ্লেট</option>
+                <option value="বিজনেস ক্যাপশন প্যাক">বিজনেস ক্যাপশন প্যাক</option>
+                <option value="অন্য কাজ / কাস্টম অর্ডার">অন্য কাজ / কাস্টম অর্ডার</option>
+              </select>
+            </label>
+          </div>
+          <div class="field-row">
+            <label>পরিমাণ
+              <input name="quantity" type="number" min="1" max="100" value="1" required>
+            </label>
+            <label>শহর / জেলা
+              <input name="city" maxlength="100" placeholder="যেমন: রংপুর">
+            </label>
+          </div>
+          <label>ঠিকানা / ডেলিভারি নির্দেশনা
+            <input name="address" maxlength="300" placeholder="প্রয়োজন হলে ঠিকানা লিখুন">
+          </label>
+          <label>অতিরিক্ত বিস্তারিত
+            <textarea name="details" rows="4" maxlength="1500" placeholder="আপনার পছন্দ, ডিজাইনের তথ্য বা বিশেষ নির্দেশনা লিখুন"></textarea>
+          </label>
+          <button class="btn btn-primary order-submit" type="submit">অর্ডার জমা দিন →</button>
+          <p class="form-note">অর্ডার জমা দিতে কাস্টমার অ্যাকাউন্টে লগইন থাকতে হবে। লগইন না থাকলে নিচের লিংক ব্যবহার করুন।</p>
+          <p><a class="back-link" href="customer.html">কাস্টমার লগইন / রেজিস্ট্রেশন</a></p>
+          <div id="orderResult" class="result-message" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </div>
+  </div>
+</main>
+<script type="module" src="order.js"></script>
+</body>
+</html>
