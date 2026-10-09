@@ -1,37 +1,35 @@
-# Smart Digital BD — সংশোধিত ফাইল
+# Smart Digital BD — Customer Login Update
 
-## এই ZIP-এ কী আছে
-- `index.html` — মূল ওয়েবসাইট, অর্ডার ফর্ম ও অর্ডার ট্র্যাকিং
-- `style.css` — ডিজাইন
-- `app.js` — Firebase-এ অর্ডার জমা ও ট্র্যাকিং
-- `admin.html` এবং `admin.js` — অ্যাডমিন লগইন ও অর্ডার Accept/Reject
-- `firestore.rules` — আপনার দেওয়া Admin UID বসানো Firestore Rules
+## এই ZIP-এ যা আছে
+- `index.html`, `app.js`: অর্ডার করতে কাস্টমার লগইন বাধ্যতামূলক; প্রতিটি অর্ডারে Firebase Auth UID সংরক্ষণ হয়। অর্ডার ট্র্যাকিংও শুধু নিজের অর্ডারের জন্য।
+- `customer.html`, `customer.js`: ইমেইল/পাসওয়ার্ড দিয়ে রেজিস্ট্রেশন ও লগইন, কাস্টমার আইডি, নিজের অর্ডার ও Approved/Rejected স্ট্যাটাস।
+- `admin.html`, `admin.js`: আলাদা অ্যাডমিন প্যানেল; নির্দিষ্ট Admin UID-কে যাচাই করে।
+- `firestore.rules`: Admin UID `4lm1ZhfL1WRbdmeLbRezks6W4lQ2` ব্যবহার করা Firestore Rules।
 
-## Firebase Rules বসানোর নিয়ম (মোবাইল থেকে)
-1. Firebase Console খুলুন: https://console.firebase.google.com/
-2. `smart-digital-bd` প্রজেক্ট খুলুন।
-3. **Build → Firestore Database → Rules**-এ যান।
-4. Rules editor-এর পুরোনো লেখা সম্পূর্ণ সিলেক্ট করে এই ZIP-এর `firestore.rules` ফাইলের সম্পূর্ণ লেখা পেস্ট করুন।
-5. **Publish** চাপুন।
+## আগে Firebase সেটিংস করুন
+1. https://console.firebase.google.com/project/smart-digital-bd/authentication/providers খুলুন।
+2. **Email/Password** provider চালু করুন (Email link নয়, Email/Password)।
+3. https://console.firebase.google.com/project/smart-digital-bd/authentication/settings খুলে Authorized domains-এ `smart-digital-bd.onrender.com` আছে কি না দেখুন; না থাকলে Add domain করুন।
+4. https://console.firebase.google.com/project/smart-digital-bd/firestore/databases/-default-/rules খুলুন।
+5. এই ZIP-এর `firestore.rules` ফাইলের সব লেখা Rules editor-এ পেস্ট করে **Publish** করুন।
+6. Authentication → Users-এ নিশ্চিত করুন অ্যাডমিন ইউজারের UID `4lm1ZhfL1WRbdmeLbRezks6W4lQ2`।
 
-এই Rules-এ Admin UID হিসেবে আপনার দেওয়া `4lm1ZhfL1WRbdmeLbRezks6W4lQ2` বসানো হয়েছে। এটি কাজ করবে তখনই, যখন Firebase Authentication-এর Email/Password provider-এ তৈরি অ্যাডমিন ইউজারের UID হুবহু এই UID হবে।
-
-## অ্যাডমিন লগইন চালু করা
-1. Firebase Console → **Build → Authentication → Sign-in method** খুলুন।
-2. **Email/Password** চালু করুন।
-3. **Users** ট্যাবে নিশ্চিত করুন যে অ্যাডমিন ইউজারের UID `4lm1ZhfL1WRbdmeLbRezks6W4lQ2`।
-4. Firebase Console → **Authentication → Users** থেকে অ্যাডমিনের ইমেইল/পাসওয়ার্ড দিয়ে `admin.html`-এ লগইন করুন। এই ফাইলে অ্যাডমিনের পাসওয়ার্ড রাখা নেই।
-
-## GitHub-এ ফাইল রিপ্লেস করা
+## GitHub-এ আপডেট (মোবাইল)
 1. ZIP ডাউনলোড করে Extract করুন।
-2. আপনার GitHub repository `Smart-Digital-BD` খুলুন।
-3. পুরোনো `index(1).html` থাকলে সেটি মুছে বা আর ব্যবহার না করে নতুন `index.html` আপলোড করুন। Render-এর মূল পেজের নাম অবশ্যই `index.html` হতে হবে।
-4. `admin.html`, `admin.js`, `app.js`, `style.css` ফাইলগুলোর পুরোনো সংস্করণ Replace করুন।
-5. `firestore.rules` ফাইলটি repository-তে রাখা যেতে পারে, তবে এটি GitHub-এ আপলোড করলেই Firebase Rules প্রকাশ হয় না—Firebase Console-এ আলাদাভাবে Publish করতে হবে।
-6. সব পরিবর্তন Commit করুন। Render connected থাকলে নতুন deploy শুরু হওয়ার কথা।
+2. GitHub repository `Smart-Digital-BD`-এ নিচের ফাইলগুলো একে একে খুলে Edit (পেন্সিল) → সব পুরোনো লেখা Replace → নতুন ফাইলের লেখা Paste → Commit changes করুন:
+   - `index.html`
+   - `app.js`
+   - `admin.js`
+   - `README.md`
+3. `customer.html`, `customer.js`, `firestore.rules` নামে নতুন ফাইল Create করুন এবং ZIP-এর একই নামের ফাইলের সম্পূর্ণ লেখা পেস্ট করে Commit করুন। `admin.html` ও `style.css` বদলানোর দরকার নেই।
+4. Render-এ GitHub auto-deploy চালু থাকলে deploy শেষ হওয়ার অপেক্ষা করুন। তারপর `https://smart-digital-bd.onrender.com/customer.html` খুলে টেস্ট করুন।
+
+## পরীক্ষা
+- কাস্টমার নতুন ইমেইল দিয়ে রেজিস্ট্রেশন করুন, তারপর অর্ডার দিন।
+- অ্যাডমিন `https://smart-digital-bd.onrender.com/admin.html`-এ লগইন করে Accept/Reject করুন।
+- কাস্টমার ড্যাশবোর্ডে ফিরে স্ট্যাটাস দেখুন।
 
 ## গুরুত্বপূর্ণ
-- Firebase web config ব্রাউজারে দেখা যায়; নিরাপত্তা Firestore Rules ও Authentication-এর ওপর নির্ভর করে।
-- কখনো Firebase service-account private key ওয়েবসাইটে বা GitHub-এ রাখবেন না।
-- Rules Publish করার পরে একটি টেস্ট অর্ডার দিন, তারপর `admin.html` থেকে Accept/Reject এবং ওয়েবসাইটের Order Tracking পরীক্ষা করুন।
-- যদি অর্ডার জমা না হয়, Firebase Console → Firestore Database → Data-তে `orders` ও `orderStatus` collection তৈরি হচ্ছে কি না দেখুন।
+- আগের অর্ডারগুলোর `uid` নেই, তাই সেগুলো কাস্টমার ড্যাশবোর্ডে দেখা যাবে না। নতুন লগইন করা কাস্টমার অর্ডার থেকে UID যুক্ত হবে।
+- Admin UID কোড/Rules-এ নির্দিষ্ট করা হয়েছে। Firebase Authentication-এর অ্যাডমিন ইউজারের UID আলাদা হলে Rules ও `admin.js`-এ সঠিক UID বসাতে হবে।
+- Rules Publish না করলে নতুন customer order submission কাজ নাও করতে পারে।

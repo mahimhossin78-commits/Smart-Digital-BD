@@ -1,98 +1,13 @@
-// Firebase Web SDK configuration goes here after creating a Firebase project.
-// Follow README.md. Until configured, the form will show a setup message.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC_-mRgfZS9oAuG1w3HzyXJJhylurfi3e4",
-  authDomain: "smart-digital-bd.firebaseapp.com",
-  projectId: "smart-digital-bd",
-  storageBucket: "smart-digital-bd.firebasestorage.app",
-  messagingSenderId: "1062207066369",
-  appId: "1:1062207066369:web:bf1f5eb2129a471a694b00",
-  measurementId: "G-BPCRCCJTZR"
-};
-const form = document.getElementById("orderForm");
-const message = document.getElementById("formMessage");
-let db = null;
-const configured = firebaseConfig.apiKey !== "PASTE_YOUR_FIREBASE_API_KEY" &&
-  firebaseConfig.projectId !== "PASTE_YOUR_PROJECT_ID";
-
-if (configured) {
-  try {
-    const app = initializeApp(firebaseConfig);
-    db = getFirestore(app);
-  } catch (error) {
-    console.error("Firebase setup error:", error);
-  }
-}
-
-document.getElementById("year").textContent = new Date().getFullYear();
-
-document.getElementById("menuToggle").addEventListener("click", () => {
-  document.getElementById("mainNav").classList.toggle("open");
-});
-document.querySelectorAll("#mainNav a").forEach(link => {
-  link.addEventListener("click", () => document.getElementById("mainNav").classList.remove("open"));
-});
-document.querySelectorAll("[data-product]").forEach(button => {
-  button.addEventListener("click", () => {
-    document.getElementById("productSelect").value = button.dataset.product;
-    document.getElementById("order").scrollIntoView({ behavior: "smooth" });
-  });
-});
-
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const data = new FormData(form);
-  const order = {
-    name: String(data.get("name") || "").trim(),
-    phone: String(data.get("phone") || "").trim(),
-    product: String(data.get("product") || "").trim(),
-    details: String(data.get("details") || "").trim()
-  };
-
-  if (!order.name || !order.phone || !order.product) {
-    message.textContent = "অনুগ্রহ করে নাম, ফোন নম্বর ও পণ্য নির্বাচন করুন।";
-    return;
-  }
-  if (!db) {
-    message.textContent = "অর্ডার ফর্ম চালু করতে আগে README.md অনুযায়ী Firebase সেটআপ করে app.js-এ কনফিগারেশন বসান।";
-    return;
-  }
-
-  const submitButton = form.querySelector('button[type="submit"]');
-  submitButton.disabled = true;
-  submitButton.textContent = "পাঠানো হচ্ছে...";
-  try {
-    const orderRef = await addDoc(collection(db, "orders"), { ...order, createdAt: serverTimestamp(), status: "pending" });
-    await setDoc(doc(db, "orderStatus", orderRef.id), { status: "pending", product: order.product, createdAt: serverTimestamp() });
-    message.textContent = `ধন্যবাদ! অর্ডার জমা হয়েছে। আপনার অর্ডার আইডি: ${orderRef.id} — এটি সংরক্ষণ করুন।`;
-    form.reset();
-  } catch (error) {
-    console.error(error);
-    message.textContent = "অর্ডার জমা হয়নি। Firebase সেটিংস ও Firestore Rules পরীক্ষা করুন।";
-  } finally {
-    submitButton.disabled = false;
-    submitButton.textContent = "অর্ডার পাঠান";
-  }
-});
-
-
-import { getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const trackForm = document.getElementById("trackForm");
-if (trackForm) trackForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const out = document.getElementById("trackMessage");
-  const id = document.getElementById("trackId").value.trim();
-  if (!db) { out.textContent = "অর্ডার ট্র্যাকিং চালু করতে Firebase কনফিগারেশন বসান।"; return; }
-  out.textContent = "খোঁজা হচ্ছে...";
-  try {
-    const snap = await getDoc(doc(db, "orderStatus", id));
-    if (!snap.exists()) { out.textContent = "এই আইডির অর্ডার পাওয়া যায়নি। আইডি ঠিক আছে কি না দেখুন।"; return; }
-    const status = snap.data().status;
-    const labels = { pending: "অপেক্ষমাণ", accepted: "অ্যাকসেপ্ট হয়েছে", rejected: "রিজেক্ট হয়েছে" };
-    out.textContent = `অর্ডারের অবস্থা: ${labels[status] || "অজানা"}`;
-  } catch (e) { console.error(e); out.textContent = "স্ট্যাটাস দেখা যায়নি। Firebase Rules পরীক্ষা করুন।"; }
-});
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyC_-mRgfZS9oAuG1w3HzyXJJhylurfi3e4",authDomain:"smart-digital-bd.firebaseapp.com",projectId:"smart-digital-bd",storageBucket:"smart-digital-bd.firebasestorage.app",messagingSenderId:"1062207066369",appId:"1:1062207066369:web:bf1f5eb2129a471a694b00",measurementId:"G-BPCRCCJTZR"};
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);let currentUser=null;
+const form=document.getElementById('orderForm'),message=document.getElementById('formMessage');
+onAuthStateChanged(auth,user=>{currentUser=user;if(form){const b=form.querySelector('button[type="submit"]');if(b){b.disabled=false;b.textContent=user?'অর্ডার পাঠান':'লগইন করে অর্ডার করুন';}}});
+document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('mainNav').classList.toggle('open'));
+document.querySelectorAll('#mainNav a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mainNav').classList.remove('open')));
+document.querySelectorAll('[data-product]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('productSelect').value=b.dataset.product;document.getElementById('order').scrollIntoView({behavior:'smooth'});}));
+form.addEventListener('submit',async e=>{e.preventDefault();if(!currentUser){message.innerHTML='অর্ডার করতে আগে <a href="customer.html"><b>লগইন বা রেজিস্ট্রেশন করুন</b></a>।';return;}const data=new FormData(form),order={name:String(data.get('name')||'').trim(),phone:String(data.get('phone')||'').trim(),product:String(data.get('product')||'').trim(),details:String(data.get('details')||'').trim()};if(!order.name||!order.phone||!order.product){message.textContent='নাম, ফোন নম্বর ও পণ্য নির্বাচন করুন।';return;}const b=form.querySelector('button[type="submit"]');b.disabled=true;b.textContent='পাঠানো হচ্ছে...';try{const orderRef=await addDoc(collection(db,'orders'),{...order,uid:currentUser.uid,email:currentUser.email||'',createdAt:serverTimestamp(),status:'pending'});await setDoc(doc(db,'orderStatus',orderRef.id),{uid:currentUser.uid,status:'pending',product:order.product,createdAt:serverTimestamp()});message.textContent=`ধন্যবাদ! অর্ডার জমা হয়েছে। অর্ডার আইডি: ${orderRef.id} — আপনার ড্যাশবোর্ডে এটি দেখতে পাবেন।`;form.reset();}catch(err){console.error(err);message.textContent='অর্ডার জমা হয়নি। Firebase Firestore Rules পরীক্ষা করুন।';}finally{b.disabled=false;b.textContent='অর্ডার পাঠান';}});
+const trackForm=document.getElementById('trackForm');if(trackForm)trackForm.addEventListener('submit',async e=>{e.preventDefault();const out=document.getElementById('trackMessage'),id=document.getElementById('trackId').value.trim();if(!currentUser){out.innerHTML='অর্ডার ট্র্যাক করতে আগে <a href="customer.html"><b>লগইন করুন</b></a>।';return;}out.textContent='খোঁজা হচ্ছে...';try{const snap=await getDoc(doc(db,'orderStatus',id));if(!snap.exists()||snap.data().uid!==currentUser.uid){out.textContent='এই আইডির অর্ডার আপনার অ্যাকাউন্টে পাওয়া যায়নি।';return;}const labels={pending:'অপেক্ষমাণ',accepted:'Approved — অ্যাকসেপ্ট হয়েছে',rejected:'Rejected — রিজেক্ট হয়েছে'};out.textContent='অর্ডারের অবস্থা: '+(labels[snap.data().status]||'অজানা');}catch(err){console.error(err);out.textContent='স্ট্যাটাস দেখা যায়নি। Firestore Rules পরীক্ষা করুন।';}});
