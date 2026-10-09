@@ -5,7 +5,7 @@ import { getFirestore, collection, getDocs, doc, updateDoc, setDoc, serverTimest
 // app.js-এর একই Firebase config এখানে বসান।
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC_-mRgfZS9oAu01w3HzyXJJhylurfi3e4",
+  apiKey: "AIzaSyC_-mRgfZS9oAuG1w3HzyXJJhylurfi3e4",
   authDomain: "smart-digital-bd.firebaseapp.com",
   projectId: "smart-digital-bd",
   storageBucket: "smart-digital-bd.firebasestorage.app",
