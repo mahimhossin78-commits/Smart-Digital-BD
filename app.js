@@ -4,7 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC_-mRgfZS9oAu01w3HzyXJJhylurf13e4",
+  apiKey: "AIzaSyC_-mRgfZS9oAuG1w3HzyXJJhylurfi3e4",
   authDomain: "smart-digital-bd.firebaseapp.com",
   projectId: "smart-digital-bd",
   storageBucket: "smart-digital-bd.firebasestorage.app",
@@ -13,11 +13,12 @@ const firebaseConfig = {
   measurementId: "G-BPCRCCJTZR"
 };
 
+
 const form = document.getElementById("orderForm");
 const message = document.getElementById("formMessage");
 let db = null;
 const configured = firebaseConfig.apiKey !== "PASTE_YOUR_FIREBASE_API_KEY" &&
-  firebaseConfig.projectId !== "PASTE_YOUR_PROJECT_ID";
+  firebaseConfig.projectId !== "4lm1ZhfL1WRbdmeLbRezks6W4lQ2";
 
 if (configured) {
   try {
