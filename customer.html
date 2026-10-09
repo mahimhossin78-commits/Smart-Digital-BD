@@ -1,9 +1,46 @@
 <!doctype html>
 <html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827"><title>কাস্টমার অ্যাকাউন্ট | Smart Digital BD</title><link rel="stylesheet" href="style.css"><style>
-.account-wrap{max-width:900px;margin:35px auto;padding:18px}.account-box{background:#fff;border:1px solid #e8ebf2;border-radius:18px;padding:22px;margin:18px 0;box-shadow:0 10px 30px #10203008}.account-form{display:grid;gap:13px;max-width:480px}.account-form input{width:100%;padding:12px;border:1px solid #dfe3ed;border-radius:9px;font:inherit}.account-form label{font-weight:600}.account-actions{display:flex;gap:10px;flex-wrap:wrap}.account-actions button{border:0;border-radius:10px;padding:11px 16px;cursor:pointer;font:inherit;font-weight:700}.secondary{background:#eef0f8}.customer-order{border:1px solid #e3e7ef;border-radius:12px;padding:15px;margin:12px 0;overflow-wrap:anywhere}.status{display:inline-block;padding:4px 10px;border-radius:20px;background:#f0edff;font-weight:700;font-size:13px}.muted{color:#657086}.hidden{display:none!important}.idline{overflow-wrap:anywhere;background:#f6f7fc;padding:10px;border-radius:8px}
+:root{--dash-ink:#15213b;--dash-muted:#68758d;--dash-line:#e4e9f2;--dash-primary:#5b5ce2;--dash-bg:#f5f7fc}
+body{background:linear-gradient(180deg,#f7f8ff 0,#fff 420px);color:var(--dash-ink)}
+.site-header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-bottom:1px solid #e9edf5;box-shadow:0 4px 24px #18274a08}
+.account-wrap{max-width:1080px;margin:34px auto 70px;padding:0 22px}
+.account-wrap>h1{font-size:clamp(28px,4vw,38px);letter-spacing:-.7px;margin:18px 0 8px;font-weight:850}
+.account-wrap>p.muted{font-size:15px;line-height:1.8;max-width:760px;margin:0 0 26px}
+.account-box{background:#fff;border:1px solid var(--dash-line);border-radius:24px;padding:clamp(20px,4vw,34px);margin:22px 0;box-shadow:0 18px 55px #17264b0a}
+#dashboard{position:relative;overflow:hidden}
+#dashboard:before{content:"";display:block;position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,#5d5ce2,#4da7e8,#52c7b5)}
+#dashboard>div:first-child{padding-bottom:20px;border-bottom:1px solid var(--dash-line);margin-bottom:24px!important}
+#dashboard h2{font-size:clamp(22px,3vw,28px);letter-spacing:-.4px;margin:0;font-weight:850}
+#logoutBtn{border:1px solid #e0e5ef;border-radius:12px;padding:10px 16px;color:#3e4b64;background:#f8f9fc;font-weight:750;cursor:pointer;transition:.2s}
+#logoutBtn:hover{background:#eef1fa;transform:translateY(-1px)}
+.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0}
+.profile-tile{min-width:0;background:#f8f9fd;border:1px solid #e8ecf5;border-radius:16px;padding:17px 18px}
+.profile-label{display:block;color:var(--dash-muted);font-size:13px;font-weight:750;margin-bottom:8px}
+.profile-value{font-size:16px;font-weight:750;overflow-wrap:anywhere;line-height:1.65}
+.profile-id{background:#f7f8fc;border:1px dashed #d9dfec;border-radius:14px;padding:14px 16px;overflow-wrap:anywhere;font:14px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;color:#44516b}
+.profile-note{display:flex;align-items:flex-start;gap:10px;background:#f0f7ff;border:1px solid #dbeaff;border-radius:14px;padding:14px 16px;color:#4d6386;font-size:14px;line-height:1.7;margin:18px 0 22px}
+.account-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.account-actions .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:13px;padding:13px 21px;font-weight:800;box-shadow:0 8px 20px #5b5ce222;transition:transform .2s,box-shadow .2s}
+.account-actions .btn:hover{transform:translateY(-2px);box-shadow:0 12px 25px #5b5ce233}
+#dashboard h2.orders-heading{padding-top:27px;margin-top:30px;border-top:1px solid var(--dash-line)}
+#ordersMessage{color:var(--dash-muted);font-size:14px;line-height:1.7;margin:14px 0}
+.customer-order{position:relative;background:#fff;border:1px solid var(--dash-line);border-radius:17px;padding:20px;margin:14px 0;overflow-wrap:anywhere;box-shadow:0 5px 18px #1a2a4b06}
+.customer-order h3{font-size:18px;margin:0 0 15px;color:#1a2742}
+.customer-order p{font-size:14px;line-height:1.8;color:#53617a;margin:7px 0}
+.customer-order p b{color:#293751}
+.status{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:#f0edff;color:#5144c8;font-weight:800;font-size:12px;border:1px solid #e0dbff}
+.account-form{max-width:560px;gap:16px}
+.account-form label{display:grid;gap:8px;font-size:14px;color:#34415a}
+.account-form input{box-sizing:border-box;width:100%;padding:14px 15px;border:1px solid #dfe5f0;border-radius:12px;background:#fbfcff;outline:none;transition:border-color .2s,box-shadow .2s}
+.account-form input:focus{border-color:#7775ee;box-shadow:0 0 0 4px #6664e91a;background:#fff}
+.account-form .btn,.account-actions button{font:inherit;font-weight:800}
+.account-actions .secondary{border:1px solid #e0e5ef;background:#f7f8fc;color:#394761;border-radius:12px;padding:12px 15px;cursor:pointer}
+#authMessage{font-size:14px;line-height:1.7;color:#5b6680}
+.hidden{display:none!important}
+@media(max-width:640px){.account-wrap{padding:0 14px;margin:22px auto 42px}.account-box{border-radius:19px;padding:19px;margin:16px 0}.profile-grid{grid-template-columns:1fr;gap:10px}.profile-tile{padding:14px}.profile-value{font-size:15px}#dashboard>div:first-child{align-items:flex-start!important}.customer-order{padding:16px}.account-actions .btn{width:100%;box-sizing:border-box}#logoutBtn{white-space:nowrap}.account-wrap>h1{margin-top:12px}}
 </style></head><body>
 <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">SD</span><span><strong>Smart Digital BD</strong><small>Customer Account</small></span></a><nav style="display:flex"><a href="index.html">ওয়েবসাইটে ফিরুন</a></nav></header>
 <main class="account-wrap"><h1>কাস্টমার অ্যাকাউন্ট</h1><p class="muted">ইমেইল ও পাসওয়ার্ড দিয়ে রেজিস্ট্রেশন/লগইন করুন। আপনার অর্ডার শুধু আপনার অ্যাকাউন্টেই দেখা যাবে।</p>
 <section id="authBox" class="account-box"><h2 id="authTitle">নতুন অ্যাকাউন্ট তৈরি করুন</h2><form id="authForm" class="account-form"><label>আপনার নাম (শুধু রেজিস্ট্রেশনের জন্য)<input id="customerName" type="text" maxlength="80" autocomplete="name" placeholder="আপনার নাম"></label><label>ইমেইল<input id="customerEmail" type="email" required autocomplete="email" placeholder="name@example.com"></label><label>পাসওয়ার্ড<input id="customerPassword" type="password" required minlength="6" autocomplete="new-password" placeholder="কমপক্ষে ৬ অক্ষর"></label><div class="account-actions"><button id="authSubmit" class="btn btn-primary" type="submit">রেজিস্ট্রেশন</button><button id="switchMode" class="secondary" type="button">আগে অ্যাকাউন্ট আছে? লগইন</button></div><p id="authMessage" role="status"></p></form></section>
-<section id="dashboard" class="account-box hidden"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><h2>আপনার ড্যাশবোর্ড</h2><button id="logoutBtn" class="secondary" type="button">লগআউট</button></div><p><b>নাম:</b> <span id="profileName">—</span></p><p><b>ইমেইল:</b> <span id="profileEmail">—</span></p><p><b>কাস্টমার আইডি:</b></p><p id="profileUid" class="idline"></p><p class="muted">অর্ডার করার সময় এই অ্যাকাউন্টে লগইন থাকা জরুরি।</p><div class="account-actions"><a class="btn btn-primary" href="index.html#order">নতুন অর্ডার করুন</a></div><h2 style="margin-top:28px">আমার অর্ডার</h2><p id="ordersMessage" role="status">অর্ডার লোড হচ্ছে...</p><div id="customerOrders"></div></section>
+<section id="dashboard" class="account-box hidden"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><h2>আপনার ড্যাশবোর্ড</h2><button id="logoutBtn" class="secondary" type="button">লগআউট</button></div><div class="profile-grid"><div class="profile-tile"><span class="profile-label">কাস্টমারের নাম</span><div class="profile-value" id="profileName">—</div></div><div class="profile-tile"><span class="profile-label">ইমেইল ঠিকানা</span><div class="profile-value" id="profileEmail">—</div></div></div><span class="profile-label">কাস্টমার আইডি</span><p id="profileUid" class="profile-id"></p><div class="profile-note"><span aria-hidden="true">ℹ️</span><span>নিরাপদে অর্ডার করতে অর্ডার দেওয়ার সময় এই অ্যাকাউন্টে লগইন থাকা নিশ্চিত করুন।</span></div><div class="account-actions"><a class="btn btn-primary" href="index.html#order">＋ নতুন অর্ডার করুন</a></div><h2 class="orders-heading">আমার অর্ডার</h2><p id="ordersMessage" role="status">অর্ডার লোড হচ্ছে...</p><div id="customerOrders"></div></section>
 </main><script type="module" src="customer.js"></script></body></html>
