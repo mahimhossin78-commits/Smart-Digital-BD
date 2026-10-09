@@ -1,15 +1,16 @@
 // Firebase Web SDK configuration goes here after creating a Firebase project.
 // Follow README.md. Until configured, the form will show a setup message.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "PASTE_YOUR_FIREBASE_API_KEY",
-  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "PASTE_YOUR_PROJECT_ID",
-  storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
-  appId: "PASTE_YOUR_APP_ID"
+  apiKey: "AIzaSyC_-mRgfZS9oAu01w3HzyXJJhylurf13e4",
+  authDomain: "smart-digital-bd.firebaseapp.com",
+  projectId: "smart-digital-bd",
+  storageBucket: "smart-digital-bd.firebasestorage.app",
+  messagingSenderId: "1062207066369",
+  appId: "1:1062207066369:web:bf1f5eb2129a471a694b00",
+  measurementId: "G-BPCRCCJTZR"
 };
 
 const form = document.getElementById("orderForm");
@@ -65,8 +66,9 @@ form.addEventListener("submit", async (event) => {
   submitButton.disabled = true;
   submitButton.textContent = "পাঠানো হচ্ছে...";
   try {
-    await addDoc(collection(db, "orders"), { ...order, createdAt: serverTimestamp(), status: "new" });
-    message.textContent = "ধন্যবাদ! আপনার অর্ডার জমা হয়েছে।";
+    const orderRef = await addDoc(collection(db, "orders"), { ...order, createdAt: serverTimestamp(), status: "pending" });
+    await setDoc(doc(db, "orderStatus", orderRef.id), { status: "pending", product: order.product, createdAt: serverTimestamp() });
+    message.textContent = `ধন্যবাদ! অর্ডার জমা হয়েছে। আপনার অর্ডার আইডি: ${orderRef.id} — এটি সংরক্ষণ করুন।`;
     form.reset();
   } catch (error) {
     console.error(error);
@@ -75,4 +77,22 @@ form.addEventListener("submit", async (event) => {
     submitButton.disabled = false;
     submitButton.textContent = "অর্ডার পাঠান";
   }
+});
+
+
+import { getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const trackForm = document.getElementById("trackForm");
+if (trackForm) trackForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const out = document.getElementById("trackMessage");
+  const id = document.getElementById("trackId").value.trim();
+  if (!db) { out.textContent = "অর্ডার ট্র্যাকিং চালু করতে Firebase কনফিগারেশন বসান।"; return; }
+  out.textContent = "খোঁজা হচ্ছে...";
+  try {
+    const snap = await getDoc(doc(db, "orderStatus", id));
+    if (!snap.exists()) { out.textContent = "এই আইডির অর্ডার পাওয়া যায়নি। আইডি ঠিক আছে কি না দেখুন।"; return; }
+    const status = snap.data().status;
+    const labels = { pending: "অপেক্ষমাণ", accepted: "অ্যাকসেপ্ট হয়েছে", rejected: "রিজেক্ট হয়েছে" };
+    out.textContent = `অর্ডারের অবস্থা: ${labels[status] || "অজানা"}`;
+  } catch (e) { console.error(e); out.textContent = "স্ট্যাটাস দেখা যায়নি। Firebase Rules পরীক্ষা করুন।"; }
 });

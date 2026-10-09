@@ -43,3 +43,79 @@
 - `index.html`: ওয়েবসাইটের কাঠামো
 - `style.css`: ডিজাইন
 - `app.js`: মেনু, অর্ডার ফর্ম এবং Firebase integration
+
+
+## 6) Admin Panel + Order Status (নতুন)
+- Admin page: `admin.html`
+- Customer status tracker: মূল ওয়েবসাইটের “অর্ডার ট্র্যাকিং” অংশ। অর্ডার জমার পর দেখানো অর্ডার আইডি কাস্টমারকে রাখতে হবে।
+- Firebase Console → Authentication → Sign-in method থেকে **Email/Password** চালু করুন। Users থেকে নিজের admin email/password user তৈরি করুন।
+- `admin.js` ও `app.js`—দুই ফাইলে একই Firebase Web config বসান।
+- Firebase Authentication-এর Users তালিকা থেকে নিজের admin user-এর **UID** কপি করুন। Firestore Rules-এ নিচের `PUT_YOUR_ADMIN_UID_HERE`-এর জায়গায় সেই UID বসাতে হবে।
+- **গুরুত্বপূর্ণ:** নিচের Rules-ই ব্যবহার করুন; আগের Rules সম্পূর্ণ বদলে দিন। Admin UID বসানো ছাড়া Publish করবেন না।
+
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == 'PUT_YOUR_ADMIN_UID_HERE';
+    }
+    match /orders/{orderId} {
+      allow create: if request.resource.data.keys().hasAll(['name','phone','product','details','createdAt','status'])
+        && request.resource.data.keys().hasOnly(['name','phone','product','details','createdAt','status'])
+        && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 80
+        && request.resource.data.phone is string && request.resource.data.phone.size() > 0 && request.resource.data.phone.size() <= 30
+        && request.resource.data.product is string && request.resource.data.product.size() > 0
+        && request.resource.data.details is string && request.resource.data.details.size() <= 1000
+        && request.resource.data.status == 'pending' && request.resource.data.createdAt is timestamp;
+      allow read, update, delete: if isAdmin();
+    }
+    match /orderStatus/{orderId} {
+      allow get: if true;
+      allow list: if false;
+      allow create: if (request.resource.data.keys().hasAll(['status','product','createdAt']) && request.resource.data.keys().hasOnly(['status','product','createdAt']) && request.resource.data.status == 'pending' && request.resource.data.product is string && request.resource.data.createdAt is timestamp) || isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+  }
+}
+```
+
+**নিরাপত্তার কথা:** `orderStatus` নথিতে শুধু স্ট্যাটাস/পণ্যের নাম থাকে, গ্রাহকের নাম/ফোন/বিস্তারিত থাকে না। অর্ডার আইডি কাউকে অনুমান করে পাওয়া কঠিন হলেও কাস্টমারকে নিজের আইডি গোপন রাখতে বলুন। পাবলিক অর্ডার ফর্মে স্প্যাম ঠেকাতে পরে App Check বা backend যোগ করা উচিত।
+
+
+## Firebase config pre-filled
+The Firebase Web App configuration provided by the owner is already inserted in `app.js` and `admin.js`. Before using the admin panel, enable Email/Password in Firebase Authentication and create the admin user. Then replace `PUT_YOUR_ADMIN_UID_HERE` in the Firestore Rules below with that user's UID. Do not publish the rules with the placeholder still present.
+
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == 'PUT_YOUR_ADMIN_UID_HERE';
+    }
+    match /orders/{orderId} {
+      allow create: if request.resource.data.keys().hasAll(['name','phone','product','details','createdAt','status'])
+        && request.resource.data.keys().hasOnly(['name','phone','product','details','createdAt','status'])
+        && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 80
+        && request.resource.data.phone is string && request.resource.data.phone.size() > 0 && request.resource.data.phone.size() <= 30
+        && request.resource.data.product is string && request.resource.data.product.size() > 0
+        && request.resource.data.details is string && request.resource.data.details.size() <= 1000
+        && request.resource.data.status == 'pending' && request.resource.data.createdAt is timestamp;
+      allow read, update, delete: if isAdmin();
+    }
+    match /orderStatus/{orderId} {
+      allow get: if true;
+      allow list: if false;
+      allow create: if request.resource.data.keys().hasAll(['status','product','createdAt'])
+        && request.resource.data.keys().hasOnly(['status','product','createdAt'])
+        && request.resource.data.status == 'pending'
+        && request.resource.data.product is string
+        && request.resource.data.createdAt is timestamp;
+      allow update, delete: if isAdmin();
+    }
+  }
+}
+```
+
+Order status documents contain only status, product, and timestamp—not customer name, phone, or details. Public order submission can still be abused for spam; add App Check or a trusted backend before production.
