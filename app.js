@@ -3,8 +3,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
 const firebaseConfig = {
-  apiKey: "AIzaSyC_-mRgfZS9oAu01w3HzyXJJhylurf13e4",
+  apiKey: "AIzaSyC_-mRgfZS9oAu01w3HzyXJJhylurfi3e4",
   authDomain: "smart-digital-bd.firebaseapp.com",
   projectId: "smart-digital-bd",
   storageBucket: "smart-digital-bd.firebasestorage.app",
