@@ -20,6 +20,7 @@
       <a href="#services">সার্ভিস</a>
       <a href="#products">পণ্য</a>
       <a href="#order">অর্ডার</a>
+      <a href="#track-order">অর্ডার ট্র্যাক</a>
     </nav>
   </header>
 
@@ -97,6 +98,23 @@
         <p id="formMessage" class="form-message" role="status"></p>
       </form>
     </section>
+  
+    <section class="section" id="track-order">
+      <div class="section-heading">
+        <span class="eyebrow">অর্ডারের অবস্থা</span>
+        <h2>আপনার অর্ডার ট্র্যাক করুন</h2>
+        <p>অর্ডার করার পর পাওয়া অর্ডার আইডি লিখে বর্তমান অবস্থা দেখুন।</p>
+      </div>
+      <div class="form-card">
+        <form id="trackForm">
+          <label for="trackId">অর্ডার আইডি</label>
+          <input id="trackId" name="trackId" type="text" autocomplete="off" required placeholder="আপনার অর্ডার আইডি লিখুন">
+          <button class="btn btn-primary" type="submit">অর্ডার ট্র্যাক করুন</button>
+          <p id="trackMessage" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
   </main>
 
   <footer>
