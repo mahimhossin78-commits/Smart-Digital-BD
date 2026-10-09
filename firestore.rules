@@ -4,20 +4,18 @@ service cloud.firestore {
     function signedIn() { return request.auth != null; }
     function isAdmin() { return signedIn() && request.auth.uid == '4lm1ZhfL1WRbdmeLbRezks6W4lQ2'; }
     match /orders/{orderId} {
-      allow create: if signedIn()
-        && request.resource.data.uid == request.auth.uid
-        && request.resource.data.status == 'pending';
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid && request.resource.data.status == 'pending';
       allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
-      allow update: if isAdmin();
-      allow delete: if isAdmin();
+      allow update, delete: if isAdmin();
     }
     match /orderStatus/{orderId} {
-      allow create: if signedIn()
-        && request.resource.data.uid == request.auth.uid
-        && request.resource.data.status == 'pending';
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid && request.resource.data.status == 'pending';
       allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
-      allow update: if isAdmin();
-      allow delete: if isAdmin();
+      allow update, delete: if isAdmin();
+    }
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
     }
   }
 }

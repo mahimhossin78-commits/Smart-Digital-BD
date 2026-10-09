@@ -1,11 +1,18 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, getDoc, getDocs, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyC_-mRgfZS9oAuG1w3HzyXJJhylurfi3e4",authDomain:"smart-digital-bd.firebaseapp.com",projectId:"smart-digital-bd",storageBucket:"smart-digital-bd.firebasestorage.app",messagingSenderId:"1062207066369",appId:"1:1062207066369:web:bf1f5eb2129a471a694b00",measurementId:"G-BPCRCCJTZR"};
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);let currentUser=null;
 const form=document.getElementById('orderForm'),message=document.getElementById('formMessage');
 onAuthStateChanged(auth,user=>{currentUser=user;if(form){const b=form.querySelector('button[type="submit"]');if(b){b.disabled=false;b.textContent=user?'অর্ডার পাঠান':'লগইন করে অর্ডার করুন';}}});
 document.getElementById('year').textContent=new Date().getFullYear();
+
+const productGrid=document.getElementById('productGrid');
+function htmlSafe(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function renderProducts(items){if(!productGrid||!items.length)return;productGrid.innerHTML=items.map((p,i)=>`<article class="product-card"><div class="product-art ${['art-purple','art-blue','art-orange'][i%3]}">${p.imageUrl?`<img src="${htmlSafe(p.imageUrl)}" alt="${htmlSafe(p.name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">`:`<span>${htmlSafe(p.category||'PRODUCT')}</span><b>${htmlSafe(p.name)}</b><small>SMART DIGITAL BD</small>`}</div><div class="product-info"><span class="pill">${htmlSafe(p.category||'পণ্য')}</span><h3>${htmlSafe(p.name)}</h3><p>${htmlSafe(p.description||'বিস্তারিত জানতে অর্ডার করুন।')}</p><div class="product-bottom"><strong>৳${Number(p.price||0).toLocaleString('bn-BD')}</strong><button class="small-order" data-product="${htmlSafe(p.name)}">অর্ডার</button></div></div></article>`).join('');productGrid.querySelectorAll('[data-product]').forEach(b=>b.addEventListener('click',()=>{const sel=document.getElementById('productSelect');let opt=[...sel.options].find(o=>o.value===b.dataset.product);if(!opt){opt=document.createElement('option');opt.value=b.dataset.product;opt.textContent=b.dataset.product;sel.appendChild(opt);}sel.value=b.dataset.product;document.getElementById('order').scrollIntoView({behavior:'smooth'});}));}
+async function loadPublicProducts(){try{const snap=await getDocs(query(collection(db,'products'),where('active','==',true),orderBy('position','asc')));if(!snap.empty)renderProducts(snap.docs.map(d=>({id:d.id,...d.data()})));}catch(e){console.warn('Using built-in demo products; Firestore products could not load.',e);}}
+loadPublicProducts();
+
 document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('mainNav').classList.toggle('open'));
 document.querySelectorAll('#mainNav a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mainNav').classList.remove('open')));
 document.querySelectorAll('[data-product]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('productSelect').value=b.dataset.product;document.getElementById('order').scrollIntoView({behavior:'smooth'});}));

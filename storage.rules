@@ -1,0 +1,11 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && request.auth.uid == '4lm1ZhfL1WRbdmeLbRezks6W4lQ2'; }
+    match /products/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() && request.resource.size < 15 * 1024 * 1024;
+    }
+  }
+}
