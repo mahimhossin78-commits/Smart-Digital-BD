@@ -72,3 +72,99 @@
   .wa-float-text{display:none}
   .footer-contact{gap:12px;font-size:12px}
 }
+
+/* ════════════════════════════════════════════════════════════
+   প্রিমিয়াম ডিজাইন — শুধু body.premium (হোমপেজ)
+   ════════════════════════════════════════════════════════════ */
+body.premium{background:#f7f8fc;color:#131a2e;-webkit-font-smoothing:antialiased;position:relative}
+body.premium.no-scroll{overflow:hidden}
+
+/* অ্যাম্বিয়েন্ট গ্লো */
+.bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(600px 400px at 85% -50px, rgba(118,91,255,.16), transparent 60%),
+    radial-gradient(520px 380px at -80px 30%, rgba(37,200,168,.12), transparent 60%);}
+body.premium main,body.premium .site-header,body.premium footer,body.premium .wa-float{position:relative;z-index:1}
+
+/* হেডার — গ্লাস */
+body.premium .site-header{background:rgba(255,255,255,.72);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid rgba(19,26,46,.06);box-shadow:0 6px 30px rgba(24,39,74,.06)}
+body.premium .brand-mark{box-shadow:0 6px 18px rgba(113,87,245,.35)}
+body.premium nav a{font-weight:600}
+body.premium nav a.nav-cta{background:linear-gradient(120deg,#7258f6,#5d76ef);color:#fff;padding:9px 18px;border-radius:999px;box-shadow:0 6px 16px rgba(113,87,245,.3)}
+
+/* হিরো */
+body.premium .hero{padding:96px clamp(20px,7vw,110px) 90px;align-items:center}
+body.premium .eyebrow{background:linear-gradient(120deg,rgba(118,91,255,.12),rgba(37,200,168,.12));border:1px solid rgba(118,91,255,.2);color:#5b46d8;padding:7px 16px;border-radius:999px}
+body.premium .hero h1{font-size:clamp(40px,5.4vw,68px);font-weight:800;letter-spacing:-1.8px}
+body.premium .hero h1 .grad{background:linear-gradient(100deg,#765bff 10%,#25c8a8 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+body.premium .hero-copy>p{font-size:17px;line-height:1.8}
+body.premium .trust-row span{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-weight:600;box-shadow:0 3px 10px rgba(24,39,74,.05)}
+body.premium .trust-row i{font-style:normal;color:#18b98a}
+
+/* বাটন প্রিমিয়াম */
+body.premium .btn-primary{background:linear-gradient(120deg,#7258f6,#4d6bf0 55%,#25b5a0);box-shadow:0 10px 26px rgba(97,86,240,.35);border-radius:14px}
+body.premium .btn-primary:hover{box-shadow:0 14px 34px rgba(97,86,240,.45)}
+
+/* স্ট্যাটস স্ট্রিপ */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1080px;margin:-30px auto 0;padding:0 20px;position:relative;z-index:2}
+.stats>div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 16px;text-align:center;box-shadow:0 10px 30px rgba(24,39,74,.07)}
+.stats b{display:block;font-size:24px;font-weight:800;background:linear-gradient(120deg,#765bff,#25c8a8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats span{font-size:13px;color:var(--muted);font-weight:600}
+
+/* সার্ভিস কার্ড */
+body.premium .service-card{border-radius:22px;border:1px solid var(--line);box-shadow:0 6px 24px rgba(24,39,74,.05);position:relative;overflow:hidden}
+body.premium .service-card:after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(118,91,255,.05),transparent 40%);opacity:0;transition:.3s}
+body.premium .service-card:hover:after{opacity:1}
+body.premium .service-icon{background:linear-gradient(135deg,#765bff,#25c8a8);color:#fff;box-shadow:0 8px 20px rgba(118,91,255,.3)}
+
+/* সেকশন হেডিং */
+body.premium .section-heading h2,body.premium .order-intro h2{font-weight:800;letter-spacing:-.8px}
+
+/* প্রোডাক্ট কার্ড প্রিমিয়াম */
+body.premium .product-card{border-radius:22px;border:1px solid var(--line);box-shadow:0 8px 28px rgba(24,39,74,.06);overflow:hidden;background:#fff}
+body.premium .product-art{margin:12px 12px 0;border-radius:16px}
+body.premium .product-card:hover{transform:translateY(-6px);box-shadow:0 22px 50px rgba(24,39,74,.12)}
+body.premium .product-art img{transition:transform .5s}
+body.premium .product-card:hover .product-art img{transform:scale(1.06)}
+body.premium .small-order{background:linear-gradient(120deg,#7258f6,#5d76ef);color:#fff;border-radius:11px;padding:9px 18px;font-weight:700;box-shadow:0 6px 16px rgba(113,87,245,.3)}
+body.premium .pill{background:linear-gradient(120deg,rgba(118,91,255,.12),rgba(37,200,168,.12));color:#5b46d8;font-weight:700}
+
+/* কনটাক্ট কার্ড প্রিমিয়াম */
+body.premium .contact-card{border-radius:22px;box-shadow:0 8px 28px rgba(24,39,74,.06)}
+body.premium .contact-card:hover{transform:translateY(-6px);box-shadow:0 22px 50px rgba(24,39,74,.12)}
+
+/* ── অর্ডার মোডাল ── */
+.modal-backdrop{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(10,14,28,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .22s}
+.modal-backdrop.open{opacity:1}
+.modal{width:min(560px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:24px;padding:clamp(22px,4vw,34px);position:relative;box-shadow:0 30px 80px rgba(10,14,28,.35);transform:translateY(16px) scale(.97);transition:transform .22s}
+.modal-backdrop.open .modal{transform:translateY(0) scale(1)}
+.modal:before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,#765bff,#4d6bf0,#25c8a8);border-radius:24px 24px 0 0}
+.modal h2{font-size:26px;font-weight:800;letter-spacing:-.5px;margin:6px 0 6px}
+.modal-sub{color:var(--muted);font-size:14px;line-height:1.7;margin:0 0 18px}
+.modal-close{position:absolute;top:16px;right:16px;border:0;background:#f2f4f9;color:#42506b;width:38px;height:38px;border-radius:12px;font-size:16px;cursor:pointer;transition:.2s}
+.modal-close:hover{background:#e8ebf4;transform:rotate(90deg)}
+.modal-form label{display:block;font-size:14px;font-weight:700;color:#33415c;margin-bottom:14px}
+.modal-form input,.modal-form select,.modal-form textarea{display:block;width:100%;margin-top:7px;border:1px solid #dfe3ee;border-radius:12px;padding:13px 14px;font:400 15px 'Hind Siliguri',sans-serif;color:#131a2e;background:#fbfcff;outline:none;transition:border-color .2s,box-shadow .2s}
+.modal-form input:focus,.modal-form select:focus,.modal-form textarea:focus{border-color:#7a6cf5;box-shadow:0 0 0 4px rgba(118,91,255,.12);background:#fff}
+.modal-form .submit-btn{width:100%;margin-top:4px}
+.modal .form-message{font-size:14px;color:#3e5372;margin:12px 0 0;min-height:20px;line-height:1.6}
+.modal .alt-order{font-size:13px;color:var(--muted);text-align:center;margin:12px 0 0}
+.modal .alt-order a{color:#128c7e;font-weight:700}
+
+/* রেসপন্সিভ */
+@media(max-width:800px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  body.premium .hero{padding-top:60px}
+}
+@media(max-width:520px){
+  .stats{grid-template-columns:repeat(2,1fr);gap:10px}
+  .stats b{font-size:20px}
+  .modal{border-radius:20px}
+}
+
+/* ★ ফিক্স: hidden অ্যাট্রিবিউট থাকলে ব্যাকড্রপ সম্পূর্ণ সরে যাবে (নইলে অদৃশ্য অবস্থায় ক্লিক আটকাত) */
+.modal-backdrop[hidden]{display:none !important}
+.modal-backdrop:not(.open){pointer-events:none}
+
+/* ডেস্কটপে WhatsApp বাটন ছোট পিল হিসেবে থাকবে */
+@media(min-width:801px){ .wa-float{width:fit-content;left:auto} }

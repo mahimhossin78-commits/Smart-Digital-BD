@@ -25,6 +25,37 @@ const productGrid = document.getElementById("productGrid");
 const productSelect = document.getElementById("productSelect");
 const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
 
+// ── অর্ডার মোডাল (পপআপ উইন্ডো) — স্ক্রল নয়, ক্লিকে উইন্ডো খোলে ──────────
+const backdrop = document.getElementById("orderModalBackdrop");
+const modalClose = document.getElementById("orderModalClose");
+let lastFocus = null;
+function openOrderModal(productName){
+  if(!backdrop) return;
+  lastFocus = document.activeElement;
+  if(productName && productSelect){
+    let opt=[...productSelect.options].find(o=>o.value===productName);
+    if(!opt){opt=document.createElement("option");opt.value=productName;opt.textContent=productName;productSelect.appendChild(opt);}
+    productSelect.value=productName;
+  }
+  updateWhatsappLink();
+  backdrop.hidden=false;
+  requestAnimationFrame(()=>backdrop.classList.add("open"));
+  document.body.classList.add("no-scroll");
+  setTimeout(()=>{ const f=document.getElementById("orderName"); if(f) f.focus(); },60);
+}
+function closeOrderModal(){
+  if(!backdrop) return;
+  backdrop.classList.remove("open");
+  document.body.classList.remove("no-scroll");
+  setTimeout(()=>{backdrop.hidden=true;},220);
+  if(lastFocus && lastFocus.focus) lastFocus.focus();
+}
+if(modalClose) modalClose.addEventListener("click", closeOrderModal);
+if(backdrop) backdrop.addEventListener("click", (e)=>{ if(e.target===backdrop) closeOrderModal(); });
+document.addEventListener("keydown", (e)=>{ if(e.key==="Escape" && backdrop && !backdrop.hidden) closeOrderModal(); });
+const heroOrderBtn = document.getElementById("heroOrderBtn");
+if(heroOrderBtn) heroOrderBtn.addEventListener("click", ()=>openOrderModal());
+
 function htmlSafe(v) {
   return String(v ?? "").replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -76,9 +107,7 @@ function renderProducts(items) {
 
   productGrid.querySelectorAll("[data-product]").forEach((b) =>
     b.addEventListener("click", () => {
-      productSelect.value = b.dataset.product;
-      document.getElementById("order").scrollIntoView({ behavior: "smooth" });
-      updateWhatsappLink();
+      openOrderModal(b.dataset.product);   // ★ স্ক্রল নয় — পপআপ উইন্ডো
     })
   );
 }
