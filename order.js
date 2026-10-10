@@ -78,7 +78,15 @@ form.addEventListener("submit", async event => {
   result.textContent = "";
   if (!currentUser) {
     result.classList.add("error");
-    result.textContent = "অর্ডার জমা দিতে আগে কাস্টমার লগইন করুন। লগইন করে আবার এই পেজে ফিরে আসুন।";
+    result.textContent = "অর্ডার জমা দিতে আগে কাস্টমার লগইন করুন। ২ সেকেন্ড পরে লগইন পেজে যাচ্ছেন...";
+    setTimeout(() => { window.location.href = "customer.html"; }, 2000);
+    return;
+  }
+
+  // ★ ইমেইল ভেরিফাই না করা থাকলে Firestore 403 দেবে — আগেই বলে দিই
+  if (!currentUser.emailVerified) {
+    result.classList.add("error");
+    result.innerHTML = 'অর্ডার করতে আগে ইমেইল ভেরিফাই করতে হবে। <a href="customer.html" style="font-weight:700">এখানে ক্লিক করে ভেরিফাই করুন</a>।';
     return;
   }
 

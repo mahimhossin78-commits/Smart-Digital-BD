@@ -1,20 +1,69 @@
 rules_version = '2';
+
+// Smart Digital BD — Firestore Security Rules
+// গুরুত্বপূর্ণ: নিচের ADMIN_UID অবশ্যই আপনার আসল অ্যাডমিন UID দিয়ে বদলান।
+// admin.js-এ যে UID হার্ডকোড করা আছে সেটাই এখানে বসবে (একই মান)।
 service cloud.firestore {
   match /databases/{database}/documents {
-    function signedIn() { return request.auth != null; }
-    function isAdmin() { return signedIn() && request.auth.uid == '4lm1ZhfL1WRbdmeLbRezks6W4lQ2'; }
+
+    // আপনার নিজের অ্যাডমিন UID (admin.js-এর সাথে হুবহু মিলতে হবে)
+    function isAdmin() {
+      return request.auth != null
+             && request.auth.uid == '4lm1ZhfL1WRbdmeLbRezks6W4lQ2';
+    }
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // ★ স্প্যাম অর্ডার আটকানোর জন্য ইমেইল ভেরিফিকেশন বাধ্যতামূলক
+    function emailVerified() {
+      return signedIn() && request.auth.token.email_verified == true;
+    }
+
+    // ── অর্ডার ────────────────────────────────────────────────────────────
     match /orders/{orderId} {
-      allow create: if signedIn() && request.resource.data.uid == request.auth.uid && request.resource.data.status == 'pending';
-      allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+      // শুধু নিজের অর্ডার পড়া যাবে; অ্যাডমিন সব পড়তে পারবে
+      allow get, list: if isAdmin()
+                       || (emailVerified() && resource.data.uid == request.auth.uid);
+
+      // নতুন অর্ডার: ভেরিফাইড গ্রাহক, নিজের uid, সঠিক স্ট্যাটাস, ভবিষ্যতের timestamp নয়
+      allow create: if emailVerified()
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.status == 'pending'
+                    && request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.name.size() <= 120
+                    && request.resource.data.phone is string
+                    && request.resource.data.phone.size() > 0
+                    && request.resource.data.phone.size() <= 30
+                    && request.resource.data.product is string
+                    && request.resource.data.product.size() > 0
+                    && request.resource.data.product.size() <= 120
+                    && request.resource.data.details is string
+                    && request.resource.data.details.size() <= 2000
+                    && request.resource.data.createdAt == request.time;
+
+      // গ্রাহক শুধু status বদলাতে পারবে না; অ্যাডমিন সব বদলাতে পারবে
       allow update, delete: if isAdmin();
     }
+
+    // ── অর্ডার স্ট্যাটাস (ট্র্যাকিং) ──────────────────────────────────────
     match /orderStatus/{orderId} {
-      allow create: if signedIn() && request.resource.data.uid == request.auth.uid && request.resource.data.status == 'pending';
-      allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow get: if isAdmin()
+                 || (emailVerified() && resource.data.uid == request.auth.uid);
+
+      allow create: if emailVerified()
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.createdAt == request.time;
+
       allow update, delete: if isAdmin();
     }
+
+    // ── পণ্য / সার্ভিস ────────────────────────────────────────────────────
+    // সবাই পড়তে পারবে (ওয়েবসাইটে পণ্য দেখানোর জন্য), লিখবে শুধু অ্যাডমিন
     match /products/{productId} {
-      allow read: if true;
+      allow get, list: if true;
       allow create, update, delete: if isAdmin();
     }
   }

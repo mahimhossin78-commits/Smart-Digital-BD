@@ -4,9 +4,59 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101827">
-  <meta name="description" content="Smart Digital BD — ডিজাইন সার্ভিস ও ডিজিটাল পণ্য">
-  <title>Smart Digital BD | ডিজিটাল পণ্য ও ডিজাইন</title>
+  <title>Smart Digital BD | ডিজিটাল পণ্য ও ডিজাইন সার্ভিস</title>
+
+  <!-- ── SEO (আগে কিছুই ছিল না) ─────────────────────────────────── -->
+  <meta name="description" content="Smart Digital BD — বাংলাদেশে সোশ্যাল মিডিয়া ডিজাইন, CV টেমপ্লেট, কনটেন্ট ও ওয়েবসাইট ডিজাইন সার্ভিস। সহজ অনলাইন অর্ডার ও ডিজিটাল ডেলিভারি।">
+  <meta name="keywords" content="সোশ্যাল মিডিয়া ডিজাইন, ফেসবুক পোস্ট ডিজাইন, CV টেমপ্লেট, রিজিউমে, ডিজিটাল সার্ভিস, বাংলাদেশ, Smart Digital BD">
+  <meta name="author" content="Smart Digital BD">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://smart-digital-bd.onrender.com/">
+
+  <!-- ফেসবুক/হোয়াটসঅ্যাপে শেয়ার করলে সুন্দর প্রিভিউ দেখাবে -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Smart Digital BD">
+  <meta property="og:title" content="Smart Digital BD | ডিজিটাল পণ্য ও ডিজাইন সার্ভিস">
+  <meta property="og:description" content="সোশ্যাল মিডিয়া ডিজাইন, CV টেমপ্লেট ও দরকারি ডিজিটাল পণ্য—সব এক জায়গায়।">
+  <meta property="og:url" content="https://smart-digital-bd.onrender.com/">
+  <meta property="og:image" content="https://smart-digital-bd.onrender.com/og-image.jpg">
+  <meta property="og:locale" content="bn_BD">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Smart Digital BD | ডিজিটাল পণ্য ও ডিজাইন সার্ভিস">
+  <meta name="twitter:description" content="সোশ্যাল মিডিয়া ডিজাইন, CV টেমপ্লেট ও ডিজিটাল পণ্য—সব এক জায়গায়।">
+  <meta name="twitter:image" content="https://smart-digital-bd.onrender.com/og-image.jpg">
+
+  <!-- ব্রাউজার ট্যাবে আইকন (আগে 404 ছিল) -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+
+  <!-- ফোন থেকে সরাসরি কল/মেসেজের সুবিধা -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link rel="stylesheet" href="style.css">
+
+  <!-- Google সার্চে ঠিকমতো ইনডেক্স হওয়ার জন্য -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Smart Digital BD",
+    "description": "সোশ্যাল মিডিয়া ডিজাইন, CV টেমপ্লেট, কনটেন্ট লেখা ও ওয়েবসাইট ডিজাইন সার্ভিস।",
+    "url": "https://smart-digital-bd.onrender.com/",
+    "areaServed": "BD",
+    "priceRange": "৳১০০ - ৳৫০০০",
+    "telephone": "+8801346261152",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+8801346261152",
+      "contactType": "customer service",
+      "areaServed": "BD",
+      "availableLanguage": ["Bangla", "English"]
+    },
+    "openingHours": "Mo-Su 09:00-22:00"
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -14,13 +64,14 @@
       <span class="brand-mark">SD</span>
       <span><strong>Smart Digital BD</strong><small>Design • Digital Products</small></span>
     </a>
-    <button class="menu-toggle" id="menuToggle" aria-label="মেনু খুলুন">☰</button>
+    <button class="menu-toggle" id="menuToggle" aria-label="মেনু খুলুন" aria-expanded="false">☰</button>
     <nav id="mainNav">
       <a href="#home">হোম</a>
       <a href="#services">সার্ভিস</a>
       <a href="#products">পণ্য</a>
       <a href="#order">অর্ডার</a>
       <a href="#track-order">অর্ডার ট্র্যাক</a>
+      <a href="#contact">যোগাযোগ</a>
       <a href="customer.html">কাস্টমার লগইন</a>
     </nav>
   </header>
@@ -34,8 +85,16 @@
         <div class="hero-actions">
           <a class="btn btn-primary" href="#products">পণ্য দেখুন</a>
           <a class="btn btn-ghost" href="#order">অর্ডার করুন</a>
+          <a class="btn btn-whatsapp" id="heroWhatsapp" href="https://wa.me/8801346261152" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.12-.27-.2-.57-.35z"/><path d="M12.04 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 6.99 2.9 9.82 9.82 0 0 1 2.9 7c0 5.45-4.45 9.87-9.9 9.87zm8.42-18.29A11.8 11.8 0 0 0 12.04 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.94L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.44c6.54 0 11.88-5.34 11.88-11.89 0-3.18-1.24-6.16-3.46-8.4z"/></svg>
+            WhatsApp
+          </a>
         </div>
-        <div class="trust-row"><span>✓ মোবাইল-ফ্রেন্ডলি</span><span>✓ সহজ অর্ডার</span><span>✓ ডিজিটাল ডেলিভারি</span></div>
+        <div class="trust-row">
+          <span>✓ মোবাইল-ফ্রেন্ডলি</span>
+          <span>✓ সহজ অর্ডার</span>
+          <span>✓ ডিজিটাল ডেলিভারি</span>
+        </div>
       </div>
       <div class="hero-card">
         <div class="mini-window">
@@ -66,12 +125,12 @@
       <div class="section-heading">
         <span class="eyebrow">ডিজিটাল শপ</span>
         <h2>জনপ্রিয় পণ্য ও সার্ভিস</h2>
-        <p>এগুলো নমুনা পণ্য। অর্ডার নেওয়ার আগে নিজের দাম ও পণ্যের বিবরণ ঠিক করে নিন।</p>
+        <p>পণ্য বা সার্ভিস বেছে নিয়ে সরাসরি অর্ডার করুন। যেকোনো প্রশ্নে WhatsApp-এ মেসেজ দিন।</p>
       </div>
+      <!-- ★ ভুয়া ডেমো পণ্য সরানো হয়েছে। এখন শুধু অ্যাডমিন প্যানেল থেকে
+           যোগ করা আসল পণ্যই দেখাবে (app.js -> loadPublicProducts) -->
       <div class="product-grid" id="productGrid">
-        <article class="product-card"><div class="product-art art-purple"><span>POST</span><b>Social Media<br>Design Pack</b><small>CREATIVE KIT</small></div><div class="product-info"><span class="pill">ডিজাইন</span><h3>ফেসবুক পোস্ট ডিজাইন</h3><p>ব্যবসার প্রচারের জন্য পোস্ট ডিজাইন।</p><div class="product-bottom"><strong>৳১০০ থেকে</strong><button class="small-order" data-product="ফেসবুক পোস্ট ডিজাইন">অর্ডার</button></div></div></article>
-        <article class="product-card"><div class="product-art art-blue"><span>CV</span><b>Professional<br>Resume Template</b><small>EDITABLE FILE</small></div><div class="product-info"><span class="pill">টেমপ্লেট</span><h3>CV টেমপ্লেট</h3><p>চাকরির আবেদনের জন্য সহজ CV ডিজাইন।</p><div class="product-bottom"><strong>৳১৫০ থেকে</strong><button class="small-order" data-product="CV টেমপ্লেট">অর্ডার</button></div></div></article>
-        <article class="product-card"><div class="product-art art-orange"><span>CAPTION</span><b>30 Business<br>Captions</b><small>CONTENT PACK</small></div><div class="product-info"><span class="pill">কনটেন্ট</span><h3>বিজনেস ক্যাপশন প্যাক</h3><p>সোশ্যাল মিডিয়ার জন্য ক্যাপশন প্যাক।</p><div class="product-bottom"><strong>৳২০০ থেকে</strong><button class="small-order" data-product="বিজনেস ক্যাপশন প্যাক">অর্ডার</button></div></div></article>
+        <p id="productLoading" class="muted">পণ্য লোড হচ্ছে...</p>
       </div>
     </section>
 
@@ -79,28 +138,43 @@
       <div class="order-intro">
         <span class="eyebrow">অর্ডার শুরু করুন</span>
         <h2>আপনার অর্ডারের তথ্য পাঠান</h2>
-        <p>অর্ডার দেওয়ার আগে কাস্টমার অ্যাকাউন্টে ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন।</p>
+        <p>অর্ডার দেওয়ার আগে কাস্টমার অ্যাকাউন্টে ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন। রেজিস্ট্রেশনের পর ইমেইলে একটি ভেরিফিকেশন লিংক যাবে—সেটিতে ক্লিক করলে অর্ডার চালু হবে।</p>
         <p><a class="btn btn-ghost" href="customer.html">কাস্টমার লগইন / রেজিস্ট্রেশন</a></p>
-        <div class="note-box"><strong>নোট:</strong> এই ওয়েবসাইটে এখনো কোনো পেমেন্ট নেওয়া হয় না। অর্ডার নিশ্চিত করার আগে গ্রাহকের সঙ্গে যোগাযোগ করে মূল্য ও ডেলিভারি ঠিক করুন।</div>
+        <div class="note-box">
+          <strong>নোট:</strong> এই ওয়েবসাইটে এখনো কোনো পেমেন্ট নেওয়া হয় না। অর্ডার নিশ্চিত করার আগে গ্রাহকের সঙ্গে যোগাযোগ করে মূল্য ও ডেলিভারি ঠিক করা হয়।
+          <br><br>
+          <strong>তাড়াহুড়ো?</strong> সরাসরি <a href="https://wa.me/8801346261152" target="_blank" rel="noopener"><b>WhatsApp</b></a> বা
+          <a href="https://t.me/+8801346261152" target="_blank" rel="noopener"><b>Telegram</b></a>-এ মেসেজ দিন —
+          <a href="tel:+8801346261152"><b>০১৩৪৬২৬১১৫২</b></a>
+        </div>
       </div>
-      <form id="orderForm" class="order-form">
-        <label>আপনার নাম<input name="name" required maxlength="80" placeholder="আপনার নাম লিখুন"></label>
-        <label>যোগাযোগ নম্বর<input name="phone" required maxlength="30" inputmode="tel" placeholder="মোবাইল নম্বর"></label>
+
+      <form id="orderForm" class="order-form" novalidate>
+        <label>আপনার নাম
+          <input name="name" id="orderName" required maxlength="80" autocomplete="name" placeholder="আপনার নাম লিখুন">
+        </label>
+        <label>যোগাযোগ নম্বর
+          <input name="phone" id="orderPhone" required maxlength="30" inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX">
+        </label>
         <label>যে পণ্য/সার্ভিস চান
           <select name="product" id="productSelect" required>
             <option value="">একটি বেছে নিন</option>
-            <option>ফেসবুক পোস্ট ডিজাইন</option>
-            <option>CV টেমপ্লেট</option>
-            <option>বিজনেস ক্যাপশন প্যাক</option>
-            <option>অন্য কাজ / কাস্টম অর্ডার</option>
           </select>
         </label>
-        <label>অতিরিক্ত তথ্য<textarea name="details" rows="4" maxlength="1000" placeholder="কী ধরনের ডিজাইন বা পণ্য চান?"></textarea></label>
+        <label>অতিরিক্ত তথ্য
+          <textarea name="details" rows="4" maxlength="1000" placeholder="কী ধরনের ডিজাইন বা পণ্য চান?"></textarea>
+        </label>
         <button class="btn btn-primary submit-btn" type="submit">অর্ডার পাঠান</button>
-        <p id="formMessage" class="form-message" role="status"></p>
+        <p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+        <p class="alt-order">
+          <a href="order.html"><b>বিস্তারিত অর্ডার ফর্ম</b></a> (পরিমাণ, শহর, ঠিকানা সহ)
+          <br>অথবা সরাসরি মেসেজ করুন —
+          <a href="https://wa.me/8801346261152" target="_blank" rel="noopener">WhatsApp</a> ·
+          <a href="https://t.me/+8801346261152" target="_blank" rel="noopener">Telegram</a>
+        </p>
       </form>
     </section>
-  
+
     <section class="section" id="track-order">
       <div class="section-heading">
         <span class="eyebrow">অর্ডারের অবস্থা</span>
@@ -117,12 +191,57 @@
       </div>
     </section>
 
+    <!-- ★ নতুন: যোগাযোগ সেকশন (আগে কোনো যোগাযোগের তথ্যই ছিল না) -->
+    <section class="section section-tinted" id="contact">
+      <div class="section-heading">
+        <span class="eyebrow">যোগাযোগ করুন</span>
+        <h2>আমাদের সঙ্গে কথা বলুন</h2>
+        <p>যেকোনো প্রশ্ন, দাম জানা বা কাস্টম অর্ডারের জন্য সরাসরি মেসেজ দিন। আমরা সাধারণত কয়েক মিনিটেই উত্তর দিই।</p>
+      </div>
+      <div class="contact-grid">
+        <a class="contact-card contact-wa" href="https://wa.me/8801346261152" target="_blank" rel="noopener">
+          <span class="contact-icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.12-.27-.2-.57-.35z"/><path d="M12.04 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 6.99 2.9 9.82 9.82 0 0 1 2.9 7c0 5.45-4.45 9.87-9.9 9.87zm8.42-18.29A11.8 11.8 0 0 0 12.04 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.94L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.44c6.54 0 11.88-5.34 11.88-11.89 0-3.18-1.24-6.16-3.46-8.4z"/></svg>
+          </span>
+          <h3>WhatsApp</h3>
+          <p>সবচেয়ে দ্রুত উত্তর পাবেন</p>
+          <strong>০১৩৪৬২৬১১৫২</strong>
+        </a>
+        <a class="contact-card contact-tg" href="https://t.me/+8801346261152" target="_blank" rel="noopener">
+          <span class="contact-icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M11.94 0A12 12 0 1 0 24 12 12 12 0 0 0 11.94 0zm5.87 8.16-1.97 9.3c-.15.66-.54.82-1.1.51l-3-2.21-1.45 1.4c-.16.16-.3.3-.6.3l.21-3.05 5.56-5.02c.24-.21-.05-.33-.37-.12l-6.87 4.33-2.96-.93c-.65-.2-.66-.65.13-.96l11.57-4.46c.53-.19 1 .13.85.91z"/></svg>
+          </span>
+          <h3>Telegram</h3>
+          <p>ফাইল ও ডিজাইন পাঠানোর জন্য</p>
+          <strong>০১৩৪৬২৬১১৫২</strong>
+        </a>
+        <a class="contact-card contact-call" href="tel:+8801346261152">
+          <span class="contact-icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.57 1 1 0 0 1-.25 1.02z"/></svg>
+          </span>
+          <h3>সরাসরি কল</h3>
+          <p>সকাল ৯টা – রাত ১০টা</p>
+          <strong>০১৩৪৬২৬১১৫২</strong>
+        </a>
+      </div>
+    </section>
+
   </main>
+
+  <!-- ★ ভাসমান WhatsApp বাটন — মোবাইলে সবসময় দেখা যাবে -->
+  <a class="wa-float" id="waFloat" href="https://wa.me/8801346261152" target="_blank" rel="noopener" aria-label="WhatsApp-এ মেসেজ দিন">
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.12-.27-.2-.57-.35z"/><path d="M12.04 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 6.99 2.9 9.82 9.82 0 0 1 2.9 7c0 5.45-4.45 9.87-9.9 9.87zm8.42-18.29A11.8 11.8 0 0 0 12.04 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.94L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.44c6.54 0 11.88-5.34 11.88-11.89 0-3.18-1.24-6.16-3.46-8.4z"/></svg>
+    <span class="wa-float-text">মেসেজ দিন</span>
+  </a>
 
   <footer>
     <a class="brand footer-brand" href="#home"><span class="brand-mark">SD</span><span><strong>Smart Digital BD</strong><small>Design • Digital Products</small></span></a>
+    <div class="footer-contact">
+      <a href="tel:+8801346261152">📞 ০১৩৪৬২৬১১৫২</a>
+      <a href="https://wa.me/8801346261152" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://t.me/+8801346261152" target="_blank" rel="noopener">Telegram</a>
+    </div>
     <p>© <span id="year"></span> Smart Digital BD. সর্বস্বত্ব সংরক্ষিত।</p>
-    <p class="footer-note">এটি একটি প্রাথমিক টেমপ্লেট। নিজের যোগাযোগের তথ্য ও নীতিমালা যোগ করুন।</p>
   </footer>
   <script type="module" src="app.js"></script>
 </body>
