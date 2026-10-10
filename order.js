@@ -21,6 +21,22 @@ const productSelect = document.getElementById("orderProduct");
 const summaryProduct = document.getElementById("summaryProduct");
 const summaryPrice = document.getElementById("summaryPrice");
 let currentUser = null;
+const WA_BASE = "https://wa.me/8801346261152";
+
+// ── অর্ডার সফল হওয়ার পপআপ (স্ক্রিনশট → WhatsApp) ──
+const successBackdrop = document.getElementById("successModalBackdrop");
+function openSuccessModal(orderId){
+  if(!successBackdrop) return;
+  const oid=document.getElementById("successOrderId"); if(oid) oid.textContent=orderId||"—";
+  const wa=document.getElementById("successWhatsapp");
+  if(wa){ const txt="আসসালামু আলাইকুম, আমি একটি অর্ডার করেছি। অর্ডার আইডি: "+(orderId||"")+"। অর্ডারের স্ক্রিনশটটি পাঠাচ্ছি।"; wa.href=WA_BASE+"?text="+encodeURIComponent(txt); }
+  successBackdrop.hidden=false; requestAnimationFrame(()=>successBackdrop.classList.add("open")); document.body.classList.add("no-scroll");
+}
+function closeSuccessModal(){ if(!successBackdrop) return; successBackdrop.classList.remove("open"); document.body.classList.remove("no-scroll"); setTimeout(()=>{successBackdrop.hidden=true;},220); }
+const _sc=document.getElementById("successModalClose"), _so=document.getElementById("successOk");
+if(_sc)_sc.addEventListener("click",closeSuccessModal);
+if(_so)_so.addEventListener("click",closeSuccessModal);
+if(successBackdrop)successBackdrop.addEventListener("click",e=>{if(e.target===successBackdrop)closeSuccessModal();});
 const priceMap = {
   "ফেসবুক পোস্ট ডিজাইন": "৳১০০ থেকে",
   "CV টেমপ্লেট": "৳১৫০ থেকে",
@@ -131,6 +147,7 @@ form.addEventListener("submit", async event => {
     form.reset();
     productSelect.value = "";
     updateSummary();
+    openSuccessModal(orderRef.id); // ★ স্ক্রিনশট→WhatsApp পপআপ
   } catch (error) {
     console.error("Order submission failed:", error);
     result.classList.add("error");

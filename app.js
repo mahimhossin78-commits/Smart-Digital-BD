@@ -56,6 +56,34 @@ document.addEventListener("keydown", (e)=>{ if(e.key==="Escape" && backdrop && !
 const heroOrderBtn = document.getElementById("heroOrderBtn");
 if(heroOrderBtn) heroOrderBtn.addEventListener("click", ()=>openOrderModal());
 
+// ── অর্ডার সফল হওয়ার পপআপ (স্ক্রিনশট → WhatsApp) ─────────────────────────
+const successBackdrop = document.getElementById("successModalBackdrop");
+const successClose = document.getElementById("successModalClose");
+const successOk = document.getElementById("successOk");
+function openSuccessModal(orderId){
+  if(!successBackdrop) return;
+  const oid = document.getElementById("successOrderId");
+  if(oid) oid.textContent = orderId || "—";
+  const wa = document.getElementById("successWhatsapp");
+  if(wa){
+    const txt = "আসসালামু আলাইকুম, আমি একটি অর্ডার করেছি। অর্ডার আইডি: " + (orderId||"") + "। অর্ডারের স্ক্রিনশটটি পাঠাচ্ছি।";
+    wa.href = CONTACT.waBase + "?text=" + encodeURIComponent(txt);
+  }
+  successBackdrop.hidden=false;
+  requestAnimationFrame(()=>successBackdrop.classList.add("open"));
+  document.body.classList.add("no-scroll");
+}
+function closeSuccessModal(){
+  if(!successBackdrop) return;
+  successBackdrop.classList.remove("open");
+  document.body.classList.remove("no-scroll");
+  setTimeout(()=>{successBackdrop.hidden=true;},220);
+}
+if(successClose) successClose.addEventListener("click", closeSuccessModal);
+if(successOk) successOk.addEventListener("click", closeSuccessModal);
+if(successBackdrop) successBackdrop.addEventListener("click",(e)=>{ if(e.target===successBackdrop) closeSuccessModal(); });
+document.addEventListener("keydown",(e)=>{ if(e.key==="Escape" && successBackdrop && !successBackdrop.hidden) closeSuccessModal(); });
+
 function htmlSafe(v) {
   return String(v ?? "").replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -248,6 +276,8 @@ form.addEventListener("submit", async (e) => {
       `✅ ধন্যবাদ! অর্ডার জমা হয়েছে।<br><b>অর্ডার আইডি:</b> ${htmlSafe(orderRef.id)}` +
       ` — আপনার ড্যাশবোর্ডে দেখতে পাবেন।`;
     form.reset();
+    closeOrderModal();            // অর্ডার ফর্ম বন্ধ
+    openSuccessModal(orderRef.id); // ★ স্ক্রিনশট→WhatsApp পপআপ
   } catch (err) {
     console.error(err);
     message.textContent =
