@@ -27,7 +27,9 @@ async function loadOrders(){list.innerHTML='';adminMessage.textContent='অর�
 snap.forEach(d=>{const o=d.data();const card=document.createElement('article');card.className='order-card';
 // ★ নতুন: order.html থেকে আসা quantity/city/address/email আগে অ্যাডমিন প্যানেলে দেখাতই না —
 //   ফলে গ্রাহক ঠিকানা দিলেও সেটা হারিয়ে যেত। এখন সব তথ্য দেখা যাবে।
-const waNum=String(o.phone||'').replace(/[^0-9]/g,'');const waLink=waNum?`https://wa.me/88${waNum.startsWith('0')?waNum.slice(1):waNum}`:'';
+// ★ ফিক্স: আগের কোড যেকোনো সংখ্যাতেই ভুল WhatsApp লিংক বানাত (যেমন 8330383838)।
+//   এখন শুধু বৈধ বাংলাদেশি নম্বরে (01XXXXXXXXX) লিংক তৈরি হয়, নয়তো লিংক দেখায় না।
+let waNum=String(o.phone||'').replace(/\D/g,'');if(waNum.startsWith('0'))waNum='88'+waNum;const waLink=/^8801\d{9}$/.test(waNum)?`https://wa.me/${waNum}?text=${encodeURIComponent('আসসালামু আলাইকুম, আপনার অর্ডার "'+(o.product||'')+'" নিয়ে Smart Digital BD থেকে যোগাযোগ করছি।')}`:'';
 const extra=[];if(o.email)extra.push(`<p><b>ইমেইল:</b> ${esc(o.email)}</p>`);if(o.quantity)extra.push(`<p><b>পরিমাণ:</b> ${esc(o.quantity)}</p>`);if(o.city)extra.push(`<p><b>শহর/জেলা:</b> ${esc(o.city)}</p>`);if(o.address)extra.push(`<p><b>ঠিকানা:</b> ${esc(o.address)}</p>`);if(o.source)extra.push(`<p><b>কোথা থেকে:</b> ${esc(o.source)}</p>`);
 card.innerHTML=`<h3>${esc(o.product)}</h3><p><b>অর্ডার আইডি:</b> ${esc(d.id)}</p><p><b>নাম:</b> ${esc(o.name)}</p><p><b>ফোন:</b> ${esc(o.phone)}${waLink?` — <a href="${esc(waLink)}" target="_blank" rel="noopener">WhatsApp</a>`:''}</p><p><b>বিস্তারিত:</b> ${esc(o.details||'—')}</p>${extra.length?`<div class="order-extra">${extra.join('')}</div>`:''}<p><b>অবস্থা:</b> ${esc(labels[o.status]||o.status||'অজানা')}</p><div class="order-actions"><button class="accept" data-status="accepted">অ্যাকসেপ্ট</button><button class="reject" data-status="rejected">রিজেক্ট</button></div>`;
 card.querySelectorAll('button[data-status]').forEach(btn=>btn.addEventListener('click',()=>setStatus(d.id,btn.dataset.status)));list.appendChild(card);});
