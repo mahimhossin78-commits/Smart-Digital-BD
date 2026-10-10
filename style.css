@@ -168,3 +168,7 @@ body.premium .contact-card:hover{transform:translateY(-6px);box-shadow:0 22px 50
 
 /* ডেস্কটপে WhatsApp বাটন ছোট পিল হিসেবে থাকবে */
 @media(min-width:801px){ .wa-float{width:fit-content;left:auto} }
+
+/* সার্ভিস কার্ডে দামের চিপ + ৪ কার্ডের জন্য নমনীয় গ্রিড */
+body.premium .service-grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.price-chip{display:inline-block;margin-top:14px;background:linear-gradient(120deg,rgba(118,91,255,.12),rgba(37,200,168,.14));color:#4c3fd6;border:1px solid rgba(118,91,255,.25);font-weight:800;font-size:13px;padding:6px 14px;border-radius:999px}
