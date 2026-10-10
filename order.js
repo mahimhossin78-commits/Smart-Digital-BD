@@ -1,6 +1,6 @@
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC_-mRgfZS9oAuG1w3HzyXJJhylurfi3e4",
@@ -51,8 +51,10 @@ updateSummary();
 
 async function loadProducts() {
   try {
-    const snap = await getDocs(query(collection(db, "products"), where("active", "==", true), orderBy("position", "asc")));
-    snap.forEach(d => {
+    // ★ ফিক্স: composite index এড়াতে orderBy বাদ, JS-এ সাজানো হচ্ছে
+    const snap = await getDocs(query(collection(db, "products"), where("active", "==", true)));
+    const sorted = snap.docs.slice().sort((a, b) => (Number(a.data().position) || 0) - (Number(b.data().position) || 0));
+    sorted.forEach(d => {
       const p = d.data();
       if (!p.name) return;
       if (![...productSelect.options].some(o => o.value === p.name)) {

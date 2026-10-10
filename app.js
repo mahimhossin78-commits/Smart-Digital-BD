@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, getDoc, getDocs, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, getDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { CONTACT } from "./config.js";
 
 const firebaseConfig = {
@@ -85,10 +85,14 @@ function renderProducts(items) {
 
 async function loadPublicProducts() {
   try {
+    // ★ ফিক্স: where + orderBy একসাথে Firestore composite index চায়, যেটা এই প্রজেক্টে নেই।
+    //   তাই orderBy বাদ দিয়ে ক্লায়েন্ট সাইডে position অনুযায়ী সাজানো হচ্ছে।
     const snap = await getDocs(
-      query(collection(db, "products"), where("active", "==", true), orderBy("position", "asc"))
+      query(collection(db, "products"), where("active", "==", true))
     );
-    renderProducts(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+    const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    items.sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
+    renderProducts(items);
   } catch (e) {
     console.warn("Firestore products could not load.", e);
     if (productGrid) {

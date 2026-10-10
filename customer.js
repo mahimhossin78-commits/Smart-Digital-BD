@@ -12,7 +12,7 @@ import {
   sendEmailVerification,
   reload
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC_-mRgfZS9oAuG1w3HzyXJJhylurfi3e4",
@@ -222,8 +222,10 @@ async function loadOrders(uid) {
   msg.textContent = "অর্ডার লোড হচ্ছে...";
 
   try {
+    // ★ ফিক্স: where("uid") + orderBy("createdAt") Firestore composite index চায়।
+    //   index ছাড়াই চলার জন্য orderBy বাদ দিয়ে JS-এ সাজানো হচ্ছে।
     const snap = await getDocs(
-      query(collection(db, "orders"), where("uid", "==", uid), orderBy("createdAt", "desc"))
+      query(collection(db, "orders"), where("uid", "==", uid))
     );
 
     if (snap.empty) {
@@ -238,7 +240,11 @@ async function loadOrders(uid) {
       rejected: "Rejected — রিজেক্ট হয়েছে"
     };
 
-    snap.forEach((d) => {
+    const sorted = snap.docs.slice().sort(
+      (a, b) => (b.data().createdAt?.seconds || 0) - (a.data().createdAt?.seconds || 0)
+    );
+
+    sorted.forEach((d) => {
       const o = d.data();
       const card = document.createElement("article");
       card.className = "customer-order";
