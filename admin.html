@@ -16,7 +16,8 @@
 <label>দেখানোর ক্রম *<input id="productPosition" required type="number" min="1" step="1" value="1"><small>১ দিলে প্রথমে দেখাবে, ২ দিলে দ্বিতীয়তে।</small></label>
 <label style="grid-column:1/-1">বিবরণ<textarea id="productDescription" rows="3" maxlength="800" placeholder="পণ্য/সার্ভিসে কী থাকছে লিখুন"></textarea></label>
 <label>পণ্যের ছবি (JPG/PNG/WebP)<input id="productImage" type="file" accept="image/png,image/jpeg,image/webp"></label>
-<label>ডাউনলোড/ডেলিভারি ফাইল (ঐচ্ছিক)<input id="productFile" type="file"></label>
+<label>ডাউনলোড/ডেলিভারি ফাইল (ঐচ্ছিক, ছোট ফাইল)<input id="productFile" type="file"></label>
+<label>অথবা ডেলিভারি ফাইলের URL (Drive/Dropbox লিংক)<input id="productFileUrl" type="url" placeholder="https://..."></label>
 <label>অথবা ছবির URL (ঐচ্ছিক)<input id="productImageUrl" type="url" placeholder="https://..."></label>
 <label style="display:flex;align-items:center;gap:8px"><input id="productFeatured" type="checkbox" style="width:auto"> জনপ্রিয় পণ্য হিসেবে দেখান</label>
 <div style="grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" type="submit" id="saveProductBtn">পণ্য যোগ করুন</button><button class="order-actions logout" type="button" id="resetProductBtn">ফর্ম পরিষ্কার</button></div><p id="productMessage" role="status" style="grid-column:1/-1"></p>
